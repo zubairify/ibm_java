@@ -13,7 +13,7 @@ pipeline {
 		stage('Compile stage') {
 			steps {
 				withMaven(maven : 'Mvn') {
-					sh 'mvn clean compile'
+					sh 'mvn -f mvn-math/pom.xml clean compile'
 				}
 			}
 		}
@@ -21,7 +21,7 @@ pipeline {
 		stage('Test stage') {
 			steps {
 				withMaven(maven : 'Mvn') {
-					sh 'mvn test'
+					sh 'mvn -f mvn-math/pom.xml test'
 				}
 			}
 		}
