@@ -13,7 +13,7 @@ pipeline {
 		stage('Compile stage') {
 			steps {
 				withMaven(maven : 'Mvn') {
-					sh 'mvn -f mvn-math/pom.xml clean compile'
+					sh 'mvn -f mvn-math/pom.xml compile'
 				}
 			}
 		}
