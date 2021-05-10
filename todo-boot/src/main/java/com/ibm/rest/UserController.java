@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.entity.User;
@@ -22,9 +23,9 @@ public class UserController {
 	private UserService service;
 	
 	@PostMapping(value = "/user", consumes = "application/json")
-	public String addUser(@RequestBody User user) {
+	public void addUser(@RequestBody User user) {
 		int id = service.addUser(user);
-		return "User added with Id: " + id;
+		System.out.println("User added with Id: " + id);
 	}
 	
 	@GetMapping(value = "/user/{userid}", produces = "application/json")
@@ -38,8 +39,11 @@ public class UserController {
 		return service.getAllUsers();
 	}
 	
-	@GetMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public User validate(@RequestBody Login login) {
-		return service.authenticate(login);
+	@GetMapping(value = "/login", produces = "application/json")
+	public User validate(@RequestParam("email") String email, @RequestParam("passwd") String passwd) {
+		Login login = new Login(email, passwd);
+		User user = service.authenticate(login);
+		System.out.println("User: " + user.getName());
+		return user;
 	}
 }

@@ -21,8 +21,9 @@ public class TodoController {
 	private TodoService service;
 	
 	@PostMapping(value = "/todo/{userid}", consumes = "application/json")
-	public int addTodo(@RequestBody Todo todo, @PathVariable int userid) {
-		return service.addTodo(todo, userid);
+	public void addTodo(@RequestBody Todo todo, @PathVariable int userid) {
+		int id = service.addTodo(todo, userid);
+		System.out.println("ToDo created with Id: " + id);
 	}
 	
 	@GetMapping(value = "/todo/{id}", produces = "application/json")
