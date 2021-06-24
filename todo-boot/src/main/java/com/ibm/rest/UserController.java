@@ -3,6 +3,8 @@ package com.ibm.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,10 +42,13 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/login", produces = "application/json")
-	public User validate(@RequestParam("email") String email, @RequestParam("passwd") String passwd) {
+	public ResponseEntity<?> validate(@RequestParam("email") String email, @RequestParam("passwd") String passwd) {
 		Login login = new Login(email, passwd);
-		User user = service.authenticate(login);
-		System.out.println("User: " + user.getName());
-		return user;
+		try {
+			User user = service.authenticate(login);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Invalid Email or Password", HttpStatus.NOT_FOUND);
+		}
 	}
 }
