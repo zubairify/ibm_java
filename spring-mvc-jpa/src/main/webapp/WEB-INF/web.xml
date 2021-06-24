@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Spring MVC Web App</display-name>
+  
+  <listener>
+  	<!--  Loads Spring IoC config file [applicationContext.xml] -->
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <servlet>
+  	<servlet-name>mvc</servlet-name>
+  	<!-- It is the front controller Servlet of Spring MVC framework -->
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>mvc</servlet-name>
+  	<!-- All the requests that will have .do Eg(http://localhost:8080/demo/hello.do) should delegate to Dispatcher servlet -->
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+</web-app>
